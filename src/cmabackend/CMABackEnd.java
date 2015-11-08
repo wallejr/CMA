@@ -31,7 +31,7 @@ public class CMABackEnd
     {
         
         
-        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=aik71111";
+        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=********";
         String success = "";
         
         try
@@ -77,7 +77,7 @@ public class CMABackEnd
         public String checkStudonCourse(String anmCode, String student)
     {
         
-        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=aik71111";
+        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=********";
         String success = "";
         
         try
@@ -123,7 +123,7 @@ public class CMABackEnd
     public String aissgnGrades(String student, String anmCode, String examNr, String grade)
     {
        
-        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=aik71111";
+        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=********";
         String success = "";
         
         try
