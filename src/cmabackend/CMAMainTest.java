@@ -20,8 +20,8 @@ public class CMAMainTest
     public static void main(String[] args)
     {
         String student = "andjoh-6";
-        String cours = "L0008B";
-        String termin = "vt15";
+        String cours = "D0007N";
+        String termin = "vt14";
         String examNr = "Provnr5";
         String grade = "G";
         String anmkod;

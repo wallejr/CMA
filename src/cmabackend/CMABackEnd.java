@@ -26,25 +26,25 @@ public class CMABackEnd
     private Course kurs;
     private Grade betyg;
     private Student stud;
+    private final String USERNAME = "walle";
+    private final String PASSWORD = "kalleanka";
+    private final String DBURL = "jdbc:mysql://10.0.1.19:3306/mydb";
+    private String success = "";
     
     public String checkCourseExistence(String coursecode, String termin)
     {
         
-        
-        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=********";
-        String success = "";
-        
         try
         {
             
-            cn = DriverManager.getConnection(DBURL);
+            cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
             
             if(cn == null)
             {
                 throw new SQLException("Uppkoppling mot databas saknas");
             }
             
-            checkStmt = cn.prepareStatement("select anmcode from WALLE.COURSES where coursecode='"+coursecode+"' and coursetermin='"+termin+"' ");
+            checkStmt = cn.prepareStatement("select anmcode from mydb.Courses where coursecode='"+coursecode+"' and coursetermin='"+termin+"' ");
             
             result = checkStmt.executeQuery();
             
@@ -77,20 +77,18 @@ public class CMABackEnd
         public String checkStudonCourse(String anmCode, String student)
     {
         
-        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=********";
-        String success = "";
         
         try
         {
             
-            cn = DriverManager.getConnection(DBURL);
+            cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
             
             if(cn == null)
             {
                 throw new SQLException("Uppkoppling mot databas saknas");
             }
             
-            checkStmt = cn.prepareStatement("select student_ID, studfname, studlname from WALLE.STUDENTS where course_fk='"+anmCode+"' and student_ID='"+student+"' ");
+            checkStmt = cn.prepareStatement("select * from mydb.Students_has_Courses where Courses_AnmCode ='"+anmCode+"' and Students_Student_ID='"+student+"' ");
             
             result = checkStmt.executeQuery();
             
@@ -123,26 +121,23 @@ public class CMABackEnd
     public String aissgnGrades(String student, String anmCode, String examNr, String grade)
     {
        
-        String DBURL = "jdbc:derby://localhost:1527/coursADB;user=walle;password=********";
-        String success = "";
-        
         try
         {
             
-            cn = DriverManager.getConnection(DBURL);
+           cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
             
             if(cn == null)
             {
                 throw new SQLException("Uppkoppling mot databas saknas");
             }
             
-            checkStmt = cn.prepareStatement("select STUDID_FK, COURSE_FK, COURSEPART, COURSEPARTGRADE from WALLE.GRADES where STUDID_FK='"+student+"'");
+            checkStmt = cn.prepareStatement("select Students_Student_ID, Courses_AnmCode, CoursePart, CoursePartGrade from mydb.Grades where Students_Student_ID='"+student+"'");
             
             result = checkStmt.executeQuery();
             if (!result.next())
             {
                     
-                checkStmt = cn.prepareStatement("insert into WALLE.GRADES (STUDID_FK, COURSE_FK, COURSEPART, COURSEPARTGRADE)" +
+                checkStmt = cn.prepareStatement("insert into mydb.Grades (Students_Student_ID, Courses_AnmCode, CoursePart, CoursePartGrade)" +
                         "VALUES (?, ?, ?, ?)");
 
                 checkStmt.setString(1, student);
