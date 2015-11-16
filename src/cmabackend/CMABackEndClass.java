@@ -11,13 +11,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  *
  * @author wallejr
  */
-public class CMABackEnd
+public class CMABackEndClass
 {
     
     private PreparedStatement checkStmt = null;
@@ -33,16 +35,25 @@ public class CMABackEnd
     
     public String checkCourseExistence(String coursecode, String termin)
     {
+//       PreparedStatement checkStmt = null;
+//    Connection cn = null;
+//     ResultSet result = null;
+//     Course kurs;
+//     Grade betyg;
+//     Student stud;
+//     final String USERNAME = "walle";
+//     final String PASSWORD = "kalleanka";
+//    final String DBURL = "jdbc:mysql://10.0.1.19:3306/mydb";
+//    String success = "";
+        
         
         try
         {
+            Class.forName("com.mysql.jdbc.Driver"); 
             
             cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
             
-            if(cn == null)
-            {
-                throw new SQLException("Uppkoppling mot databas saknas");
-            }
+
             
             checkStmt = cn.prepareStatement("select anmcode from mydb.Courses where coursecode='"+coursecode+"' and coursetermin='"+termin+"' ");
             
@@ -63,7 +74,12 @@ public class CMABackEnd
             
         } catch (SQLException e)
         {
-            System.err.println("Det uppstod ett fel vid verifiering av kurs.\nVar vänlig försök igen senare eller kontakta systemadministratören." + e.getMessage());
+            success = "Det uppstod ett fel vid verifiering av kurs.\n" + 
+                    e.getMessage() + 
+                    "\nVar vänlig försök igen senare eller kontakta systemadministratören.\n";
+        } catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(CMABackEndClass.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally
         {
@@ -80,6 +96,7 @@ public class CMABackEnd
         
         try
         {
+            Class.forName("com.mysql.jdbc.Driver"); 
             
             cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
             
@@ -123,6 +140,7 @@ public class CMABackEnd
        
         try
         {
+            Class.forName("com.mysql.jdbc.Driver"); 
             
            cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
             
@@ -242,3 +260,5 @@ public class CMABackEnd
     
     
 }
+
+

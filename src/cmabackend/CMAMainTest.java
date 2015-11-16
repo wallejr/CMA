@@ -27,7 +27,7 @@ public class CMAMainTest
         String anmkod;
         
         // TODO code application logic here
-        CMABackEnd test = new CMABackEnd();
+        CMABackEndClass test = new CMABackEndClass();
         
         anmkod = test.checkCourseExistence(cours, termin);
         
