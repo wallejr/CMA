@@ -5,6 +5,8 @@
  */
 package cmabackend;
 
+import cmabackend.Entities.*;
+
 
 
 /**
@@ -25,9 +27,26 @@ public class CMAMainTest
         String examNr = "Provnr5";
         String grade = "G";
         String anmkod;
+        ListManager lm = new ListManager();
+        
+       
         
         // TODO code application logic here
         CMABackEndClass test = new CMABackEndClass();
+        
+        lm = test.getAllCourses();
+        for (Course c : lm.getCourseList())
+        {
+            System.out.println(c.toString());
+        }
+        
+        lm = test.getAllStudents();
+        for (Student s : lm.getStudentList())
+        {
+            System.out.println(s.toString());
+        }
+        
+        
         
         anmkod = test.checkCourseExistence(cours, termin);
         

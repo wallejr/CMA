@@ -5,6 +5,9 @@
  */
 package cmabackend.Entities;
 
+import java.util.ArrayList;
+
+
 /**
  *
  * @author wallejr
@@ -102,5 +105,7 @@ public class Student
     {
         return String.format("%-10s | %-15s | %-6s | %-10s | %-10s", getStudent_ID(), getStudFName(), getStudLName(), getStudPersNr(), getCourse_FK());
     }
+
+
     
 }
