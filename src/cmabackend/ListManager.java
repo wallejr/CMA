@@ -39,6 +39,8 @@ public class ListManager
     }
 
     /**
+     * 
+     * Method to dislplay all the registered students
      * @return the StudentList
      */
     public ArrayList<Student> getStudentList()
@@ -47,6 +49,8 @@ public class ListManager
     }
 
     /**
+     * 
+     * Method to dislplay all the registered courses
      * @return the CourseList
      */
     public ArrayList<Course> getCourseList()

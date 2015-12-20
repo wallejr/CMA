@@ -5,13 +5,15 @@
  */
 package cmabackend.Entities;
 
-import java.util.ArrayList;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author wallejr
  */
+@XmlRootElement
 public class Student
 {
     private String student_ID;

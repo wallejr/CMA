@@ -5,10 +5,13 @@
  */
 package cmabackend.Entities;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author wallejr
  */
+@XmlRootElement
 public class Course
 {
     private String anmCode;

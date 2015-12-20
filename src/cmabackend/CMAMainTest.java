@@ -27,24 +27,28 @@ public class CMAMainTest
         String examNr = "Provnr5";
         String grade = "G";
         String anmkod;
-        ListManager lm = new ListManager();
         
        
         
         // TODO code application logic here
         CMABackEndClass test = new CMABackEndClass();
+        CMABackEndGetList testa = new CMABackEndGetList();
         
-        lm = test.getAllCourses();
-        for (Course c : lm.getCourseList())
+//        testa.getCourseXML();
+        
+        testa.getAllCourses().stream().forEach((c) ->
         {
             System.out.println(c.toString());
-        }
-        
-        lm = test.getAllStudents();
-        for (Student s : lm.getStudentList())
+        });
+        testa.getAllStudents().stream().forEach((s) ->
         {
             System.out.println(s.toString());
-        }
+        });//        
+//        lm = test.getAllStudents();
+//        for (Student s : lm.getStudentList())
+//        {
+//            System.out.println(s.toString());
+//        }
         
         
         
@@ -59,9 +63,9 @@ public class CMAMainTest
             System.out.println(studonCourse);
         }
         
-        String registerdGrade = test.aissgnGrades(student, anmkod, examNr, grade);
+//        String registerdGrade = test.aissgnGrades(student, anmkod, examNr, grade);
         
-        System.out.println(registerdGrade);
+//        System.out.println(registerdGrade);
         
         
         

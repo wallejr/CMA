@@ -6,10 +6,12 @@
 package cmabackend;
 
 import cmabackend.Entities.*;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -127,7 +129,7 @@ public class CMABackEndClass
     
     //Method that assign grades to the databs. Has studentid, anmcode, examnr and grades as input.
     //Returns a string wether successfull or not
-    public String aissgnGrades(String student, String anmCode, String examNr, String grade)
+    public String assignGrades(String student, String anmCode, String examNr, String grade)
     {
        
         try
@@ -141,7 +143,7 @@ public class CMABackEndClass
                 throw new SQLException("Uppkoppling mot databas saknas");
             }
             
-            checkStmt = cn.prepareStatement("select Students_Student_ID, Courses_AnmCode, CoursePart, CoursePartGrade from mydb.Grades where Students_Student_ID='"+student+"'");
+            checkStmt = cn.prepareStatement("select Students_Student_ID, Courses_AnmCode, CoursePart, CoursePartGrade from mydb.Grades where Students_Student_ID='"+student+"' and Courses_AnmCode='"+anmCode+"' and CoursePart='"+examNr+"'");
             
             result = checkStmt.executeQuery();
             if (!result.next())
@@ -182,107 +184,8 @@ public class CMABackEndClass
         return success;
     }
     
-    public ListManager getAllCourses()
-    {
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver"); 
-            
-            cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
-            
 
-            
-            checkStmt = cn.prepareStatement("select AnmCode as 'Anmälningskod', CourseCode as ' Kurskod', CourseName as 'Kursnamn', CourseTermin as 'Termin' from mydb.Courses");
-            
-            result = checkStmt.executeQuery();
-            
-            if (!result.next())
-            {
-                success = "Det finns inga kurser";
-            }
-            else
-            {
-                do
-                {
-                    kurs = new Course();
-                    kurs.setAnmCode(result.getString(1));
-                    kurs.setCourseCode(result.getString(2));
-                    kurs.setCourseName(result.getString(3));
-                    kurs.setCourseTermin(result.getString(4));
-
-                    lm.addCourse(kurs);
-                }while(result.next());
-                
-            }
-            
-        } catch (SQLException e)
-        {
-            success = "Det uppstod ett fel vid verifiering av kurs.\n" + 
-                    e.getMessage() + 
-                    "\nVar vänlig försök igen senare eller kontakta systemadministratören.\n";
-        } catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(CMABackEndClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-                closeConnections();
-
-        }
-        
-        return lm;
-    }
     
-    public ListManager getAllStudents()
-    {
-        
-        
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver"); 
-            
-            cn = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
-            
-            checkStmt = cn.prepareStatement("select s.Student_ID as 'Student ID', s.StudFName as 'Förnamn', s.StudLName as 'Efternamn', c.CourseCode as 'Kurs'  from (Students s, Courses c) left join Students_has_Courses sc On sc.Students_Student_ID=s.Student_ID where c.AnmCode = sc.Courses_AnmCode");
-            
-            result = checkStmt.executeQuery();
-            
-            if (!result.next())
-            {
-                success = "Det finns inga elever";
-            }
-            else
-            {
-                do
-                {
-                    stud = new Student();
-                    this.stud.setStudent_ID(result.getString(1));
-                    this.stud.setStudFName(result.getString(2));
-                    this.stud.setStudLName(result.getString(3));
-                    this.stud.setCourse_FK(result.getString(4));
-                    
-                   lm.addStudent(stud);
-                }while(result.next());
-            }
-                
-            
-        } catch (SQLException e)
-        {
-            success = "Det uppstod ett fel vid verifiering av kurs.\n" + 
-                    e.getMessage() + 
-                    "\nVar vänlig försök igen senare eller kontakta systemadministratören.\n";
-        } catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(CMABackEndClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-                closeConnections();
-
-        }
-        
-        return lm;
-    }
         
     private void closeConnections()
     {
